@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fatima Haider Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Roboto', sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { background: #121212; color: #fff; line-height: 1.6; overflow-x:hidden; position:relative; }
+
+  /* Navbar */
+  nav { position: fixed; top:0; width:100%; background:#1f1f1f; display:flex; justify-content:center; padding:1rem 0; box-shadow:0 2px 5px rgba(0,0,0,0.5); z-index:100; transition: background 0.3s; }
+  nav.scrolled { background: #1a1a1a; box-shadow:0 4px 10px rgba(0,0,0,0.7); }
+  nav ul { display:flex; list-style:none; gap:2rem; flex-wrap: wrap; justify-content:center; }
+  nav li { position: relative; }
+  nav a { text-decoration:none; color:#fff; font-weight:700; padding:0.5rem; transition: color 0.3s, text-shadow 0.3s; }
+  nav a::after { content:""; position:absolute; width:0; height:2px; left:0; bottom:0; background:#ff4081; transition: width 0.3s; }
+  nav a:hover::after, nav a.active::after { width:100%; }
+  nav a:hover, nav a.active { text-shadow: 0 0 8px #ff4081, 0 0 16px #ff4081; }
+
+  /* Sections */
+  section { min-height:100vh; padding:5rem 2rem; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; overflow:hidden; z-index:1; }
+  h1, h2 { margin-bottom:1rem; }
+  h1 { font-size:3rem; color:#ff4081; transition: text-shadow 0.3s; }
+  h1:hover { text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081, 0 0 30px #ff4081; cursor: default; }
+  h2 { font-size:2rem; color:#fff; }
+
+  /* Cursor */
+  .cursor { display:inline-block; background-color:#ff4081; width:2px; margin-left:2px; animation: blink 0.7s infinite; vertical-align: bottom; }
+  @keyframes blink { 0%,50%,100%{opacity:1;} 25%,75%{opacity:0;} }
+
+  /* Fade-in sections */
+  .fade-in { opacity:0; transform: translateY(30px); transition: all 1s ease; }
+  .fade-in.visible { opacity:1; transform: translateY(0); }
+
+  /* Floating circles globally */
+  .float-circle { position:absolute; border-radius:50%; opacity:0.15; z-index:0; transition: box-shadow 0.3s; }
+  .float-circle:hover { box-shadow: 0 0 15px #ff4081, 0 0 25px #42a5f5, 0 0 35px #00e676; cursor: default; }
+  @keyframes float1 { 0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);} }
+  @keyframes float2 { 0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(20px) translateX(-25px);} }
+  @keyframes float3 { 0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-15px) translateX(30px);} }
+  @keyframes float4 { 0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(25px) translateX(10px);} }
+  @keyframes float5 { 0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-20px) translateX(-20px);} }
+  .circle1 { animation: float1 10s infinite ease-in-out; }
+  .circle2 { animation: float2 12s infinite ease-in-out; }
+  .circle3 { animation: float3 8s infinite ease-in-out; }
+  .circle4 { animation: float4 11s infinite ease-in-out; }
+  .circle5 { animation: float5 9s infinite ease-in-out; }
+
+  /* About section description */
+  #about p { max-width:600px; margin:1rem auto; font-size:1.1rem; color:#ccc; text-align:center; line-height:1.6; }
+
+  /* Skills */
+  .skills { display:flex; flex-direction:column; gap:1.5rem; margin-top:2rem; width:100%; max-width:600px; }
+  .skill { display:flex; justify-content:space-between; align-items:center; background:#1f1f1f; padding:0.5rem 1rem; border-radius:30px; overflow:hidden; cursor:pointer; transition: transform 0.3s; }
+  .skill:hover { transform: scale(1.05); }
+  .skill-name { font-weight:700; color:#ff4081; }
+  .skill-bar { background:#333; width:60%; height:10px; border-radius:10px; overflow:hidden; margin-left:1rem; }
+  .skill-fill { background:#ff4081; height:100%; width:0; transition: width 2s ease; }
+
+  /* Projects */
+  .projects { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:2rem; margin-top:2rem; width:100%; max-width:1000px; }
+  .project { display:flex; flex-direction:column; align-items:center; }
+  .project img { width:100%; border-radius:10px; margin-bottom:0.5rem; }
+  .project-overlay { background: rgba(0,0,0,0.7); color:#fff; padding:0.8rem; border-radius:10px; text-align:center; width:100%; margin-bottom:0.5rem; }
+  .project h3 { color:#ff4081; margin-bottom:0.3rem; }
+
+  /* Contact */
+  .contact a { display:inline-block; margin:1rem; text-decoration:none; color:#fff; background:#ff4081; padding:0.7rem 1.5rem; border-radius:30px; transition: background 0.3s, transform 0.3s, box-shadow 0.3s; }
+  .contact a:hover { background:#e73370; transform: scale(1.05); box-shadow:0 4px 15px rgba(255,64,129,0.5); }
+
+  /* Responsive */
+  @media (max-width: 768px){
+    h1 { font-size:2.2rem; }
+    h2 { font-size:1.5rem; }
+    .projects { grid-template-columns: 1fr; }
+    nav ul { gap:1rem; }
+    .skills .skill { flex-direction: column; align-items:flex-start; }
+    .skill-bar { width:100%; margin-left:0; margin-top:0.5rem; }
+  }
+
+  @media (max-width: 480px){
+    h1 { font-size:1.8rem; }
+    h2 { font-size:1.2rem; }
+    section { padding:4rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating circles -->
+<div class="float-circle circle1" style="width:100px;height:100px;top:10%;left:5%;background:#ff4081;"></div>
+<div class="float-circle circle2" style="width:50px;height:50px;top:20%;left:70%;background:#42a5f5;"></div>
+<div class="float-circle circle3" style="width:70px;height:70px;top:30%;left:60%;background:#00e676;"></div>
+<div class="float-circle circle4" style="width:60px;height:60px;top:40%;left:20%;background:#ffea00;"></div>
+<div class="float-circle circle5" style="width:40px;height:40px;top:50%;left:50%;background:#ff9800;"></div>
+<div class="float-circle circle1" style="width:90px;height:90px;top:60%;left:70%;background:#e91e63;"></div>
+<div class="float-circle circle2" style="width:60px;height:60px;top:65%;left:10%;background:#3f51b5;"></div>
+<div class="float-circle circle3" style="width:80px;height:80px;top:15%;left:40%;background:#00bcd4;"></div>
+<div class="float-circle circle4" style="width:50px;height:50px;top:75%;left:30%;background:#ff5722;"></div>
+<div class="float-circle circle5" style="width:60px;height:60px;top:85%;left:60%;background:#9c27b0;"></div>
+
+<!-- Navbar -->
+<nav>
+  <ul>
+    <li><a href="#about" class="nav-link active">About</a></li>
+    <li><a href="#skills" class="nav-link">Skills</a></li>
+    <li><a href="#projects" class="nav-link">Projects</a></li>
+    <li><a href="#contact" class="nav-link">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- About -->
+<section id="about">
+  <h1><span id="typing-name"></span><span class="cursor"></span></h1>
+  <h2><span id="typing-role"></span><span class="cursor"></span></h2>
+  <p class="fade-in">I am a passionate Front-End Developer, UI/UX Designer, and Creative Thinker.<br>
+     I love building vibrant and interactive web experiences.<br>
+     Minimalist design with neon aesthetics is my style.</p>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skills fade-in">
+    <div class="skill">
+      <span class="skill-name">HTML</span>
+      <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
+    </div>
+    <div class="skill">
+      <span class="skill-name">CSS</span>
+      <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
+    </div>
+    <div class="skill">
+      <span class="skill-name">JavaScript</span>
+      <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+    </div>
+    <div class="skill">
+      <span class="skill-name">React</span>
+      <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!--Projects-->
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="projects">
+    <div class="project-card">
+      <img src="images/amazon.png" alt="Amazon Clone">
+      <h3>Amazon Clone</h3>
+      <p>Mini Amazon clone layout with product cards and hover effects.</p>
+    </div>
+
+    <div class="project-card">
+      <img src="images/dashboard.png" alt="React Dashboard">
+      <h3>React Dashboard</h3>
+      <p>Responsive dashboard with cards and hover glow effect.</p>
+    </div>
+
+    <div class="project-card">
+      <img src="images/todo.png" alt="Todo App">
+      <h3>Todo App</h3>
+      <p>Simple JS Todo app with add/delete tasks functionality.</p>
+    </div>
+
+    <div class="project-card">
+      <img src="images/portfolio.png" alt="Portfolio Website">
+      <h3>Portfolio Website</h3>
+      <p>Minimal one-page portfolio with dark theme and animations.</p>
+    </div>
+
+    <div class="project-card">
+      <img src="images/clickgame.png" alt="Click Game">
+      <h3>Click Counter Game</h3>
+      <p>Fun interactive JS click game with score counter.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Contact -->
+<section id="contact">
+  <h2>Contact Me</h2>
+  <div class="contact fade-in">
+    <a href="mailto:your.email@example.com">Email Me</a>
+    <a href="https://www.linkedin.com/in/yourlinkedin" target="_blank">LinkedIn</a>
+  </div>
+</section>
+
+<script>
+  // Fade-in
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOptions = { threshold: 0.2 };
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    });
+  }, appearOptions);
+  faders.forEach(fader => appearOnScroll.observe(fader));
+
+  // Navbar scroll & active link
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => { if(pageYOffset >= section.offsetTop - 100) current = section.id; });
+    navLinks.forEach(link => { link.classList.remove('active'); if(link.getAttribute('href').includes(current)) link.classList.add('active'); });
+    const nav = document.querySelector('nav');
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Skill bars animation
+  const skillFills = document.querySelectorAll('.skill-fill');
+  const skillSection = document.querySelector('#skills');
+  const skillObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){ skillFills.forEach(fill => fill.style.width = fill.style.width); skillObserver.unobserve(skillSection); }
+    });
+  }, { threshold: 0.5 });
+  skillObserver.observe(skillSection);
+
+  // Typing Name
+  const nameText = "Fatima Haider"; let nameIndex=0;
+  (function typeName(){ document.getElementById("typing-name").textContent = nameText.slice(0,++nameIndex); if(nameIndex<nameText.length)setTimeout(typeName,150); })();
+
+  // Typing Role
+  const roleText = "I am a passionate Front-End Developer"; let roleIndex=0;
+  setTimeout(function typeRole(){ document.getElementById("typing-role").textContent = roleText.slice(0,++roleIndex); if(roleIndex<roleText.length)setTimeout(typeRole,100); }, nameText.length*150+300);
+</script>
+
+</body>
+</html>
